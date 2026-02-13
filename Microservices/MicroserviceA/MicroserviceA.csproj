@@ -18,7 +18,7 @@
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
 
 		<!-- Nouveau package officiel Elasticsearch pour Serilog -->
-		<PackageReference Include="Elastic.Serilog.Sinks" Version="9.0.0" />
+		<PackageReference Include="Elastic.Serilog.Sinks" Version="8.19.0" />
 
 		<!-- OpenTelemetry -->
 		<PackageReference Include="OpenTelemetry" Version="1.15.0" />

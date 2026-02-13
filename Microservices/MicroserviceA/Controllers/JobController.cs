@@ -38,7 +38,7 @@ namespace MicroserviceA.Controllers
 
             // Appel HTTP vers ServiceB
             var client = _httpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:5002/say-hello");
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://microservice-b:8080/say-hello");
             request.Headers.Add("X-Correlation-ID", correlationId);
 
             var response = await client.SendAsync(request);

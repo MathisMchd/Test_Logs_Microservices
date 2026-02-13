@@ -17,7 +17,7 @@ Serilog.Log.Logger = new LoggerConfiguration()
     .Enrich.With(new OpenTelemetryEnricher()) // TraceId / SpanId
     .Enrich.WithProperty("ServiceName", "MicroserviceA")
     .WriteTo.Console(outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} {CorrelationId} {TraceId} {SpanId} {Message:lj}{NewLine}{Exception}")
+        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} CorId :{CorrelationId} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}")
     .WriteTo.Elasticsearch(
         new[] { new Uri("http://elasticsearch:9200") },
         options =>
@@ -43,14 +43,12 @@ builder.Services.AddOpenTelemetry()
     {
         tracing
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddConsoleExporter();
+            .AddHttpClientInstrumentation();
         // .AddOtlpExporter(); // si tu veux envoyer vers OTEL collector
     });
 
+builder.Services.AddHttpClient();
 
-builder.Services.AddHttpClient("ServiceBClient")
-    .AddHttpMessageHandler<TracePropagationHandler>();
 
 
 // ------------------
