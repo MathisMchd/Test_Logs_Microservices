@@ -16,7 +16,7 @@ Serilog.Log.Logger = new LoggerConfiguration()
     .Enrich.With(new OpenTelemetryEnricher()) // TraceId / SpanId
     .Enrich.WithProperty("ServiceName", "MicroserviceB")
     .WriteTo.Console(outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} CorId :{CorrelationId} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}")
+        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}") // CorId :{CorrelationId}
     .WriteTo.Elasticsearch(
         new[] { new Uri("http://elasticsearch:9200") },
         options =>
