@@ -1,13 +1,24 @@
-﻿using System;
+﻿using Serilog.Core;
+using Serilog.Events;
+using System.Diagnostics;
 
-public class OpenTelemetryEnricher : Serilog.Core.ILogEventEnricher
+public class OpenTelemetryEnricher : ILogEventEnricher
 {
-    public void Enrich(Serilog.Events.LogEvent logEvent, Serilog.Core.ILogEventPropertyFactory propertyFactory)
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
     {
-        var traceId = System.Diagnostics.Activity.Current?.TraceId.ToString() ?? string.Empty;
-        var spanId = System.Diagnostics.Activity.Current?.SpanId.ToString() ?? string.Empty;
+        // Récupère l'activité courante
+        var activity = Activity.Current;
 
+        // TraceId
+        var traceId = activity?.TraceId.ToString() ?? string.Empty;
+        // SpanId courant
+        var spanId = activity?.SpanId.ToString() ?? string.Empty;
+        // Span parent
+        var parentSpanId = activity?.ParentSpanId.ToString() ?? string.Empty;
+
+        // Ajoute dans le log
         logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("TraceId", traceId));
         logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("SpanId", spanId));
+        logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty("ParentSpanId", parentSpanId));
     }
 }

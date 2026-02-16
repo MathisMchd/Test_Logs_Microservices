@@ -4,10 +4,26 @@
 # Microservices, ElasticSearch et Kibana
 
 
-docker-compose -f docker-compose.elasticsearch.yml up -d
+A la racine du projet : 
 
+Pour lancer elastic et kibana : 
+
+```
+docker-compose -f docker-compose.elasticsearch.yml up -d
+```
+
+
+
+
+Pour lancer les microservices :
+
+```
+docker-compose -f docker-compose.microservices.yml up --build
+```
 
 curl http://localhost:9200/_cluster/health
 
 
-docker-compose -f docker-compose.microservices.yml up --build
+## Notes
+
+CorrelationID non nécessaire, déjà fait par le traceId
