@@ -5,11 +5,15 @@
 
 Le but est de centraliser les logs des microservices dans ElasticSearch et de les visualiser avec Kibana
 
-## PrÈrequis 
+## Pr√©requis 
 
  - Docker
 
- ## Lancement du projet
+## Packages
+ - Serilog (Microservices) (https://serilog.net/)
+ - OpenTelemetry (https://opentelemetry.io/)
+
+## Lancement du projet
 
 A la racine du projet : 
 
@@ -40,8 +44,8 @@ En POST :
  - http://localhost:5601/
 
 
-CrÈer une vue pour visualiser les logs dans les menus ‡ gauche : `Analytics > Dicover`.
-Remarque : Il vous faut au moins avoir utilisÈ les microservices une fois (pour avoir des index et pouvoir crÈer la vue)
+Cr√©er une vue pour visualiser les logs dans les menus √† gauche : `Analytics > Dicover`.
+Remarque : Il vous faut au moins avoir utilis√© les microservices une fois (pour avoir des index et pouvoir cr√©er la vue)
 
 - Nom : `Microservices`
 - Index pattern pour cibler les sources : `logs-*`
@@ -52,7 +56,7 @@ Remarque : Il vous faut au moins avoir utilisÈ les microservices une fois (pour 
 
 Sauvegarder la vue.
 
-_Remarques_ : si vous avez dÈj‡ lancÈ et appelÈ les microservices, vous allez voir deux sources :
+_Remarques_ : si vous avez d√©j√† lanc√© et appel√© les microservices, vous allez voir deux sources :
  - logs-microservice-a-default
  - logs-microservice-b-default
 
@@ -64,4 +68,4 @@ https://www.elastic.co/blog/how-to-embed-kibana-dashboards
 
 ## Notes
 
-CorrelationID non nÈcessaire, dÈj‡ fait par le traceId
+CorrelationID non n√©cessaire, d√©j√† fait par le traceId
