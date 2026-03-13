@@ -9,7 +9,16 @@ Le but est de centraliser les logs des microservices dans ElasticSearch et de le
 
  - Docker
 
- ## Lancement du projet
+## Packages
+ - Serilog (Microservices) (https://serilog.net/)
+ - OpenTelemetry (https://opentelemetry.io/)
+
+ - Elastic
+ - Kibana
+
+ - Elastic.Serilog.Sinks pour elasticSearch et serilog
+ - 
+## Lancement du projet
 
 A la racine du projet : 
 
@@ -64,4 +73,4 @@ https://www.elastic.co/blog/how-to-embed-kibana-dashboards
 
 ## Notes
 
-CorrelationID non n�cessaire, d�j� fait par le traceId
+CorrelationID non nécessaire, déjà fait par le traceId

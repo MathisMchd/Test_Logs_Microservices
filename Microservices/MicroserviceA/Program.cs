@@ -48,15 +48,15 @@ builder.Host.UseSerilog();
 // ------------------
 // OpenTelemetry Tracing
 // ------------------
-//builder.Services.AddOpenTelemetry()
-//    .ConfigureResource(resource => resource.AddService("MicroserviceA"))
-//    .WithTracing(tracing =>
-//    {
-//        tracing
-//            .AddAspNetCoreInstrumentation()
-//            .AddHttpClientInstrumentation();
-//        // .AddOtlpExporter(); // si tu veux envoyer vers OTEL collector
-//    });
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("MicroserviceA"))
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+        // .AddOtlpExporter(); // si tu veux envoyer vers OTEL collector
+    });
 
 builder.Services.AddHttpClient();
 
