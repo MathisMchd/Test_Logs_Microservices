@@ -13,6 +13,9 @@ Le but est de centraliser les logs des microservices dans ElasticSearch et de le
  - Serilog (Microservices) (https://serilog.net/)
  - OpenTelemetry (https://opentelemetry.io/)
 
+ - Elastic
+ - Kibana
+
 ## Lancement du projet
 
 A la racine du projet : 
