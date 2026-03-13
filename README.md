@@ -16,6 +16,8 @@ Le but est de centraliser les logs des microservices dans ElasticSearch et de le
  - Elastic
  - Kibana
 
+ - Elastic.Serilog.Sinks pour elasticSearch et serilog
+ - 
 ## Lancement du projet
 
 A la racine du projet : 
