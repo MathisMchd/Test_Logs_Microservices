@@ -5,6 +5,7 @@ using MicroserviceB.Class;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ Serilog.Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()               // CorrelationId middleware
     .Enrich.With(new OpenTelemetryEnricher()) // TraceId / SpanId
     .Enrich.WithProperty("ServiceName", "MicroserviceB")
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) // ignore les logs info Microsoft
+    .MinimumLevel.Override("System", LogEventLevel.Warning)
     .WriteTo.Console(outputTemplate:
         "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}") // CorId :{CorrelationId}
     .WriteTo.Elasticsearch(
@@ -67,7 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

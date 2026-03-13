@@ -6,6 +6,8 @@ using MicroserviceA.Class;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using Serilog.Events;
+using Serilog.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,15 @@ Serilog.Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()               // CorrelationId middleware
     .Enrich.With(new OpenTelemetryEnricher()) // TraceId / SpanId
     .Enrich.WithProperty("ServiceName", "MicroserviceA")
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) // ignore les logs info Microsoft
+    .MinimumLevel.Override("System", LogEventLevel.Warning)
+    //.Filter.ByExcluding(le =>
+    //le.MessageTemplate.Text.Contains("Executed action") ||
+    //le.MessageTemplate.Text.Contains("Executed endpoint") ||
+    //le.MessageTemplate.Text.Contains("Request finished") ||
+    //le.MessageTemplate.Text.Contains("Executing OkObjectResult") ||
+    //le.MessageTemplate.Text.Contains("HTTP/1.1"))
     .WriteTo.Console(outputTemplate:
         "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}") // CorId :{CorrelationId}
     .WriteTo.Elasticsearch(
@@ -37,15 +48,15 @@ builder.Host.UseSerilog();
 // ------------------
 // OpenTelemetry Tracing
 // ------------------
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => resource.AddService("MicroserviceA"))
-    .WithTracing(tracing =>
-    {
-        tracing
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation();
-        // .AddOtlpExporter(); // si tu veux envoyer vers OTEL collector
-    });
+//builder.Services.AddOpenTelemetry()
+//    .ConfigureResource(resource => resource.AddService("MicroserviceA"))
+//    .WithTracing(tracing =>
+//    {
+//        tracing
+//            .AddAspNetCoreInstrumentation()
+//            .AddHttpClientInstrumentation();
+//        // .AddOtlpExporter(); // si tu veux envoyer vers OTEL collector
+//    });
 
 builder.Services.AddHttpClient();
 
@@ -68,7 +79,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

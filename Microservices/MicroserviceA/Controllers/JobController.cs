@@ -18,29 +18,28 @@ namespace MicroserviceA.Controllers
         [HttpPost("start-job")]
         public async Task<IActionResult> StartJob()
         {
-            var correlationId = HttpContext.Request.Headers["X-Correlation-ID"].FirstOrDefault()
-                                ?? Guid.NewGuid().ToString();
 
             Log.Information("Job démarré");
 
             // Simulation de retries
-            for (int retry = 1; retry <= 2; retry++)
+            for (int retry = 1; retry <= 100; retry++)
             {
                 try
                 {
-                    if (retry < 2) throw new Exception("Échec simulé");
+                    if (retry < 88) throw new Exception("Échec simulé");
                     Log.Information("Job exécuté avec succès après {RetryCount} retries", retry);
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning(ex, "Retry {RetryCount} en cours", retry);
+                    Log.Error(ex, "Échec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressources. " +
+
+               "Échec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesÉchec de l'exécution du job après {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vérifier la configuration et les ressourcesDétails techniques : {ExceptionMessage}", retry, ex.StackTrace, ex.Message);
                 }
             }
 
             // Appel HTTP vers ServiceB
             var client = _httpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://microservice-b:8080/say-hello");
-            request.Headers.Add("X-Correlation-ID", correlationId);
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://microservice-b:8080/SayHello/say-hello");
 
             var response = await client.SendAsync(request);
             var message = await response.Content.ReadAsStringAsync();

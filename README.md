@@ -5,7 +5,7 @@
 
 Le but est de centraliser les logs des microservices dans ElasticSearch et de les visualiser avec Kibana
 
-## Prérequis 
+## Prï¿½requis 
 
  - Docker
 
@@ -16,7 +16,7 @@ A la racine du projet :
 Pour lancer elastic et kibana : 
 
 ```
-docker-compose -f docker-compose.elasticsearch.yml up -d
+docker-compose -f docker-compose.elasticsearch.yml up --build -d
 ```
 
 
@@ -40,8 +40,8 @@ En POST :
  - http://localhost:5601/
 
 
-Créer une vue pour visualiser les logs dans les menus à gauche : `Analytics > Dicover`.
-Remarque : Il vous faut au moins avoir utilisé les microservices une fois (pour avoir des index et pouvoir créer la vue)
+Crï¿½er une vue pour visualiser les logs dans les menus ï¿½ gauche : `Analytics > Dicover`.
+Remarque : Il vous faut au moins avoir utilisï¿½ les microservices une fois (pour avoir des index et pouvoir crï¿½er la vue)
 
 - Nom : `Microservices`
 - Index pattern pour cibler les sources : `logs-*`
@@ -52,7 +52,7 @@ Remarque : Il vous faut au moins avoir utilisé les microservices une fois (pour 
 
 Sauvegarder la vue.
 
-_Remarques_ : si vous avez déjà lancé et appelé les microservices, vous allez voir deux sources :
+_Remarques_ : si vous avez dï¿½jï¿½ lancï¿½ et appelï¿½ les microservices, vous allez voir deux sources :
  - logs-microservice-a-default
  - logs-microservice-b-default
 
@@ -64,4 +64,4 @@ https://www.elastic.co/blog/how-to-embed-kibana-dashboards
 
 ## Notes
 
-CorrelationID non nécessaire, déjà fait par le traceId
+CorrelationID non nï¿½cessaire, dï¿½jï¿½ fait par le traceId
