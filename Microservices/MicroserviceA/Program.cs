@@ -7,6 +7,9 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddHttpClient();
+
 // ------------------
 // Configure Serilog avec Elastic.Serilog.Sinks
 // ------------------
@@ -21,6 +24,7 @@ Serilog.Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 
+
 // ------------------
 // OpenTelemetry Logging (logs applicatifs → OTLP)
 // ------------------
@@ -29,7 +33,7 @@ builder.Logging.AddOpenTelemetry(logging =>
     logging.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicroserviceA"));
     logging.AddOtlpExporter(otlpOptions =>
     {
-        otlpOptions.Endpoint = new Uri("http://otel-collector:4318/v1/logs");
+        otlpOptions.Endpoint = new Uri("http://otel-collector:4318");
         otlpOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
     });
 
@@ -51,7 +55,6 @@ builder.Services.AddOpenTelemetry()
 
 
 
-builder.Services.AddHttpClient();
 
 
 // ------------------
