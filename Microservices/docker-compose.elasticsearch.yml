@@ -30,6 +30,22 @@ services:
     networks:
       - microservices-network
 
+
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.93.0  # version 3.8 correspond approximativement à 0.93.0
+    container_name: otel-collector
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml:ro
+    command: ["--config", "/etc/otel-collector-config.yml"]
+    ports:
+      - "4318:4318"  # HTTP OTLP
+      - "4317:4317"  # gRPC OTLP
+    depends_on:
+      - elasticsearch
+    networks:
+      - microservices-network
+      
 networks:
   microservices-network:
     external: true
