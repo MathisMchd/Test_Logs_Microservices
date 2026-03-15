@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
 
@@ -45,7 +44,7 @@ services:
       - elasticsearch
     networks:
       - microservices-network
-      
+
 networks:
   microservices-network:
     external: true

@@ -22,7 +22,13 @@ Le but est de centraliser les logs des microservices dans ElasticSearch et de le
 
 A la racine du projet : 
 
-Pour lancer elastic et kibana : 
+Creer le réseau si pas déjà existant
+```
+docker network create microservices-network
+```
+
+Pour lancer elastic et kibana (sous `/Microservices`): 
+
 
 ```
 docker-compose -f docker-compose.elasticsearch.yml up --build -d
@@ -31,7 +37,7 @@ docker-compose -f docker-compose.elasticsearch.yml up --build -d
 
 
 
-Pour lancer les microservices :
+Pour lancer les microservices (sous `/Microservices`):
 
 ```
 docker-compose -f docker-compose.microservices.yml up --build
