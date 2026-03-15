@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.elasticsearch.yml = docker-compose.elasticsearch.yml
 		docker-compose.microservices.yml = docker-compose.microservices.yml
+		otel-collector-config.yml = otel-collector-config.yml
 		..\README.md = ..\README.md
 		Vue_analytics_logs_microservices.png = Vue_analytics_logs_microservices.png
 	EndProjectSection

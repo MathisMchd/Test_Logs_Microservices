@@ -1,60 +1,58 @@
+﻿
 using MicroserviceA.Class;
-using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ------------------
-// Configure Serilog pour console locale (facultatif)
+// Configure Serilog avec Elastic.Serilog.Sinks
 // ------------------
 Serilog.Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
+    .Enrich.FromLogContext()               // CorrelationId middleware
     .Enrich.With(new OpenTelemetryEnricher()) // TraceId / SpanId
-    .Enrich.WithProperty("ServiceName", "MicroserviceA")
-    .MinimumLevel.Information()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .MinimumLevel.Override("System", LogEventLevel.Warning)
+    .Enrich.WithProperty("ServiceName", "MicroserviceB")
     .WriteTo.Console(outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} TraceId: {TraceId} SpanId: {SpanId} {Message:lj}{NewLine}{Exception}")
+        "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName} TraceId: {TraceId} Span : {SpanId} {Message:lj}{NewLine}{Exception}") // CorId :{CorrelationId}
+    .MinimumLevel.Information()
     .CreateLogger();
-
 builder.Host.UseSerilog();
 
+
 // ------------------
-// Configure OpenTelemetry Logging pour OTLP Collector
+// OpenTelemetry Logging (logs applicatifs → OTLP)
 // ------------------
 builder.Logging.AddOpenTelemetry(logging =>
 {
     logging.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicroserviceA"));
     logging.AddOtlpExporter(otlpOptions =>
     {
-        otlpOptions.Endpoint = new Uri("http://otel-collector:4318/v1/logs"); // ton collector
+        otlpOptions.Endpoint = new Uri("http://otel-collector:4318/v1/logs");
         otlpOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
     });
-    logging.IncludeFormattedMessage = true;
-    logging.IncludeScopes = true;
-    logging.ParseStateValues = true;
-});
 
+    logging.IncludeFormattedMessage = true; // message complet
+    logging.IncludeScopes = true;            // contexte
+    logging.ParseStateValues = true;         // propriétés
+});
 // ------------------
 // OpenTelemetry Tracing
 // ------------------
-//builder.Services.AddOpenTelemetryTracing(tracing =>
-//{
-//    tracing
-//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicroserviceA"))
-//        .AddAspNetCoreInstrumentation()
-//        .AddHttpClientInstrumentation()
-//        .AddOtlpExporter(otlpOptions =>
-//        {
-//            otlpOptions.Endpoint = new Uri("http://otel-collector:4318/v1/traces");
-//            otlpOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
-//        });
-//});
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("MicroserviceA"))
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+    });
+
+
+
+builder.Services.AddHttpClient();
+
 
 // ------------------
 // Services / Swagger
@@ -73,7 +71,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

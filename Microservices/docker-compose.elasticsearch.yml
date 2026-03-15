@@ -35,7 +35,7 @@ services:
     image: otel/opentelemetry-collector-contrib:0.93.0  # version 3.8 correspond approximativement à 0.93.0
     container_name: otel-collector
     volumes:
-      - ./otel-collector-config.yml:/etc/otel-collector-config.yml:ro
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
     command: ["--config", "/etc/otel-collector-config.yml"]
     ports:
       - "4318:4318"  # HTTP OTLP

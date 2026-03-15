@@ -1,0 +1,49 @@
+# otel-collector-config.yml
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  # Met en batch les données pour optimiser l'envoi
+  batch:
+    timeout: 5s
+    send_batch_size: 1024
+
+  # Enrichissement des logs et traces avec des attributs communs
+  attributes:
+    actions:
+      - key: data_stream.type
+        value: logs
+        action: upsert
+      - key: data_stream.namespace
+        value: default
+        action: upsert
+      # dataset et service.name seront définis par les applications (OTLP)
+      # si tu veux forcer un dataset par défaut, tu peux le mettre ici
+      # - key: data_stream.dataset
+      #   value: my-default-dataset
+      #   action: upsert
+
+exporters:
+  elasticsearch:
+    endpoints: ["http://elasticsearch:9200"]
+    # Laisser logs_index vide pour que les datas streams utilisent les attributs
+    logs_index: ""
+
+service:
+  pipelines:
+    # Pipeline pour les logs OTLP
+    logs:
+      receivers: [otlp]
+      processors: [attributes, batch]
+      exporters: [elasticsearch]
+
+    # Pipeline pour les traces OTLP
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [elasticsearch]
