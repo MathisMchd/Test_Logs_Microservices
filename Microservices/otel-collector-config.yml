@@ -24,9 +24,9 @@ processors:
         action: upsert
       # dataset et service.name seront définis par les applications (OTLP)
       # si tu veux forcer un dataset par défaut, tu peux le mettre ici
-      # - key: data_stream.dataset
-      #   value: my-default-dataset
-      #   action: upsert
+      - key: data_stream.dataset
+        value: microserviceA
+        action: upsert
 
 exporters:
   debug:
