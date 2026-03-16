@@ -11,6 +11,7 @@
 	<ItemGroup>
 		<!-- Swagger/OpenAPI -->
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+		<PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.2.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.2" />
 
 		<!-- Serilog -->

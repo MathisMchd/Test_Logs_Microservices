@@ -32,7 +32,7 @@ services:
 
 
   otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.93.0  # version 3.8 correspond approximativement à 0.93.0
+    image: otel/opentelemetry-collector-contrib:0.142.0
     container_name: otel-collector
     volumes:
       - ./otel-collector-config.yml:/etc/otel-collector-config.yml
@@ -40,6 +40,7 @@ services:
     ports:
       - "4318:4318"  # HTTP OTLP
       - "4317:4317"  # gRPC OTLP
+      - "13133:13133" # Health Check
     depends_on:
       - elasticsearch
     networks:
