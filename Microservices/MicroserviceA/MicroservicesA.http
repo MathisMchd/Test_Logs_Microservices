@@ -1,6 +1,9 @@
-@MicroservicesA_HostAddress = http://localhost:5211
+@MicroserviceA_HostAddress = http://localhost:5001
 
-GET {{MicroservicesA_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{MicroserviceA_HostAddress}}/job/start-job
+
+###
+
+POST {{MicroserviceA_HostAddress}}/job/double-job
 
 ###

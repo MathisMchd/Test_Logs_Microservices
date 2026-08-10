@@ -10,12 +10,11 @@ namespace MicroserviceB.Controllers
         [HttpGet("count")]
         public IActionResult Get()
         {
-           
-            Log.Information("Count endpoint appelé");
+            Log.Information("Count endpoint appelÃ©");
 
             var message = "Count from MicroserviceB!";
 
-            Log.Information("Réponse générée : {Message}", message);
+            Log.Information("RÃ©ponse gÃ©nÃ©rÃ©e : {Message}", message);
 
             return Ok(new { Message = message });
         }

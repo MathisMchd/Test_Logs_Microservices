@@ -1,5 +1,5 @@
 # -----------------------------
-# Étape runtime (base)
+# Ã‰tape runtime (base)
 # -----------------------------
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
@@ -7,12 +7,12 @@ EXPOSE 8080
 EXPOSE 8081
 
 # -----------------------------
-# Étape build
+# Ã‰tape build
 # -----------------------------
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copier le projet et restaurer les dépendances
+# Copier le projet et restaurer les dÃ©pendances
 COPY ["MicroserviceA/MicroserviceA.csproj", "MicroserviceA/"]
 RUN dotnet restore "MicroserviceA/MicroserviceA.csproj"
 
@@ -24,13 +24,13 @@ WORKDIR "/src/MicroserviceA"
 RUN dotnet build "MicroserviceA.csproj" -c Release -o /app/build
 
 # -----------------------------
-# Étape publish
+# Ã‰tape publish
 # -----------------------------
 FROM build AS publish
 RUN dotnet publish "MicroserviceA.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # -----------------------------
-# Étape finale
+# Ã‰tape finale
 # -----------------------------
 FROM base AS final
 WORKDIR /app

@@ -18,35 +18,32 @@ namespace MicroserviceA.Controllers
         [HttpPost("start-job")]
         public async Task<IActionResult> StartJob()
         {
+            Log.Information("Job d√©marr√©");
 
-            Log.Information("Job dÈmarrÈ");
-
-            // Simulation de retries
+            // Simulation de retries pour g√©n√©rer du volume de logs (succ√®s au bout de 88 tentatives)
             for (int retry = 1; retry <= 100; retry++)
             {
                 try
                 {
-                    if (retry < 88) throw new Exception("…chec simulÈ");
-                    Log.Information("Job exÈcutÈ avec succËs aprËs {RetryCount} retries", retry);
+                    if (retry < 88) throw new Exception("√âchec simul√©");
+                    Log.Information("Job ex√©cut√© avec succ√®s apr√®s {RetryCount} retries", retry);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources. " +
-
-               "…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressources…chec de l'exÈcution du job aprËs {RetryCount} retries. Stacktrace complet : {StackTrace}. Veuillez vÈrifier la configuration et les ressourcesDÈtails techniques : {ExceptionMessage}", retry, ex.StackTrace, ex.Message);
+                    Log.Error(ex, "√âchec de l'ex√©cution du job apr√®s {RetryCount} retries", retry);
                 }
             }
 
-            // Appel HTTP vers ServiceB
+            // Appel HTTP vers MicroserviceB
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "http://microservice-b:8080/SayHello/say-hello");
 
             var response = await client.SendAsync(request);
             var message = await response.Content.ReadAsStringAsync();
 
-            Log.Information("RÈponse de ServiceB reÁue : {Message}", message);
+            Log.Information("R√©ponse de MicroserviceB re√ßue : {Message}", message);
 
-            return Ok(new { Message = "Job terminÈ", ServiceBResponse = message });
+            return Ok(new { Message = "Job termin√©", ServiceBResponse = message });
         }
 
         [HttpPost("double-job")]
@@ -54,19 +51,19 @@ namespace MicroserviceA.Controllers
         {
             using var spanA = new Activity("DoubleJob").Start(); // Span global
 
-            Log.Information("- Lancement de deux jobs en parallËle...");
+            Log.Information("Lancement de deux jobs en parall√®le...");
 
-            // Lancer les deux jobs en parallËle, chaque t‚che crÈe son propre span
+            // Lancer les deux jobs en parall√®le, chaque t√¢che cr√©e son propre span
             var job1 = ExecuteJobAsync("Job-1", "http://microservice-b:8080/SayHello/say-hello", spanA);
             var job2 = ExecuteJobAsync("Job-2", "http://microservice-b:8080/Count/count", spanA);
 
             var results = await Task.WhenAll(job1, job2);
 
-            Log.Information("- Les deux jobs sont terminÈs");
+            Log.Information("Les deux jobs sont termin√©s");
 
             return Ok(new
             {
-                Message = "Deux jobs exÈcutÈs en parallËle",
+                Message = "Deux jobs ex√©cut√©s en parall√®le",
                 Results = results
             });
         }
@@ -74,24 +71,24 @@ namespace MicroserviceA.Controllers
         private async Task<object> ExecuteJobAsync(string jobName, string url, Activity parentSpan)
         {
             using var span = new Activity(jobName);
-            span.SetParentId(parentSpan.Id); // dÈfinit parent
+            span.SetParentId(parentSpan.Id);
             span.Start();
 
-            Log.Information(" ==> {JobName} dÈmarrÈ", jobName);
+            Log.Information("{JobName} d√©marr√©", jobName);
 
             var client = _httpClientFactory.CreateClient();
 
-            Log.Information(" - {JobName} appelle {Url}", jobName, url);
+            Log.Information("{JobName} appelle {Url}", jobName, url);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
-            // Propagation automatique de trace avec HttpClient
+            // Propagation manuelle du traceparent vers MicroserviceB
             request.Headers.Add("traceparent", span.Id);
 
             var response = await client.SendAsync(request);
             var message = await response.Content.ReadAsStringAsync();
 
-            Log.Information(" - {JobName} rÈponse reÁue : {Message}", jobName, message);
+            Log.Information("{JobName} r√©ponse re√ßue : {Message}", jobName, message);
 
             return new
             {
@@ -99,7 +96,5 @@ namespace MicroserviceA.Controllers
                 ServiceBResponse = message
             };
         }
-
     }
-
 }

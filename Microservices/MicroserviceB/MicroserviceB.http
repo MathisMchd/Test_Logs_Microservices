@@ -1,6 +1,11 @@
-@MicroserviceB_HostAddress = http://localhost:5007
+@MicroserviceB_HostAddress = http://localhost:5002
 
-GET {{MicroserviceB_HostAddress}}/weatherforecast/
+GET {{MicroserviceB_HostAddress}}/SayHello/say-hello
+Accept: application/json
+
+###
+
+GET {{MicroserviceB_HostAddress}}/Count/count
 Accept: application/json
 
 ###

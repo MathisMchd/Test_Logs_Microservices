@@ -10,12 +10,12 @@ namespace MicroserviceB.Controllers
         [HttpGet("say-hello")]
         public IActionResult Get()
         {
-            // Les logs récupèrent automatiquement CorrelationId + TraceId + SpanId
-            Log.Information("SayHello endpoint appelé");
+            // Le CorrelationId, TraceId et SpanId sont ajoutÃ©s automatiquement par les enrichers Serilog
+            Log.Information("SayHello endpoint appelÃ©");
 
             var message = "Hello from MicroserviceB!";
 
-            Log.Information("Réponse générée : {Message}", message);
+            Log.Information("RÃ©ponse gÃ©nÃ©rÃ©e : {Message}", message);
 
             return Ok(new { Message = message });
         }
